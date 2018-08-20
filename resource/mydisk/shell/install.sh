@@ -11,8 +11,6 @@ DISK_TMP="${UDISK_ROOT}/mydisk/tmp/disk.tmp"
 SEQ_MAX="100"
 REBOOT="reboot"
 IP_FORMAT="^[0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*$"
-NUMBER=
-NUM=
 
 #### Function
 echo_error()
@@ -23,64 +21,33 @@ echo_error()
 
 read_var()
 {
-        VAR="$1"
-        
         for NUM in $(seq ${SEQ_MAX}); do
                 echo ""
-                echo -n "....${2} (默认:${3}): "
-                read "$VAR"
+                echo -n "....${1} (默认:${2}): "
+                read VAR
                 
-                VALUE=$(eval echo '$'"$VAR")
+                VAR=$(echo "$VAR" | sed "s/[ \t]//g")
                 
-                VALUE=$(echo "$VALUE" | sed "s/[ \t]//g")
-                
-                if [[ -z "$VALUE" ]]; then
-                        VALUE="$3"
+                if [[ -z "$VAR" ]]; then
+                        VAR="$2"
                 fi
                 
-                if ( echo "$VALUE" | grep "$4" &> ${NULL_TMP} ); then
-                        "$5"
+                if ( echo "$VAR" | grep "$3" &> ${NULL_TMP} ); then
+                        "$4"
                 else
-                        "$6"
+                        "$5"
                 fi
         done
 }
 
-read_value()
+read_mount()
 {
-        VAR="$1"
-        
         echo ""
-        echo -n "....${2} [Y/N]: "
-        read "$VAR"
+        echo -n "....${1} [Y/N]: "
+        read VAR
         
-        VALUE=$(eval echo '$'"$VAR")
-        
-        VALUE=$(echo "$VALUE" | sed "s/[ \t]//g")
-        VALUE=$(echo "$VALUE" | tr "[a-z]" "[A-Z]")
-}
-
-read_disk()
-{
-        VAR="$1"
-        
-        echo ""
-        echo -n "....${2} ${NUMBER} (例如:${3}${NUM}): "
-        read "$VAR"
-        
-        VALUE=$(eval echo '$'"$VAR")
-        
-        VALUE=$(echo "$VALUE" | sed "s/[ \t]//g")
-        
-        if [[ "$VALUE" == "Q" ]] || [[ "$VALUE" == "QUIT" ]] \
-        || [[ "$VALUE" == "q" ]] || [[ "$VALUE" == "quit" ]]; then
-                break 1
-        fi
-        
-        if ( ! echo "$VALUE" | grep "$4" &> ${NULL_TMP} ); then
-                echo_error
-                continue 1
-        fi
+        VAR=$(echo "$VAR" | sed "s/[ \t]//g")
+        VAR=$(echo "$VAR" | tr "[a-z]" "[A-Z]")
 }
 
 check_file()
@@ -100,14 +67,14 @@ mkdir -p ${UDISK_ROOT}/mydisk/tmp
 echo "正在配置 CentOS:"
 echo ""
 
-read_var   "IPADDR"         "....请输入你的IP" "192.168.1.5"     "$IP_FORMAT"                   "break"      "echo_error"
-read_var   "GATEWAY"        "..请输入你的网关" "192.168.1.1"     "$IP_FORMAT"                   "break"      "echo_error"
-read_var   "DNS"            "...请输入你的DNS" "114.114.114.114" "$IP_FORMAT"                   "break"      "echo_error"
-read_var   "HOSTNAME"       "请输入你的主机名" "mydisk"          "^[A-Za-z_][A-Za-z0-9_\-\.]*$" "break"      "echo_error"
-read_var   "ROOT_PASSWORD"  "..请输入root密码" "123456"          "'"                            "echo_error" "break"
-read_var   "ADMIN_PASSWORD" ".请输入admin密码" "123456"          "'"                            "echo_error" "break"
-read_value "MOUNT_UDISK"    ".是否自动挂载U盘"
-read_value "MOUNT_DISK"     "..是否挂载新硬盘"
+read_var   "....请输入你的IP" "192.168.1.5"     "$IP_FORMAT"                   "break"      "echo_error" && IPADDR="$VAR"
+read_var   "..请输入你的网关" "192.168.1.1"     "$IP_FORMAT"                   "break"      "echo_error" && GATEWAY="$VAR"
+read_var   "...请输入你的DNS" "114.114.114.114" "$IP_FORMAT"                   "break"      "echo_error" && DNS="$VAR"
+read_var   "请输入你的主机名" "mydisk"          "^[A-Za-z_][A-Za-z0-9_\-\.]*$" "break"      "echo_error" && HOSTNAME="$VAR"
+read_var   "..请输入root密码" "123456"          "'"                            "echo_error" "break"      && ROOT_PASSWORD="$VAR"
+read_var   ".请输入admin密码" "123456"          "'"                            "echo_error" "break"      && ADMIN_PASSWORD="$VAR"
+read_mount ".是否自动挂载U盘" && MOUNT_UDISK="$VAR"
+read_mount "..是否挂载新硬盘" && MOUNT_DISK="$VAR"
 
 ## screen 2
 if [[ "$MOUNT_DISK" == "Y" ]] || [[ "$MOUNT_DISK" == "YES" ]]; then
@@ -125,8 +92,37 @@ if [[ "$MOUNT_DISK" == "Y" ]] || [[ "$MOUNT_DISK" == "YES" ]]; then
                 
                 NUMBER=$(printf "%02d\n" ${NUM})
                 
-                read_disk "MOUNT_DEVICE" "请输入设备名称" "/dev/sdb" "^/dev/[A-Za-z][A-Za-z0-9/_\-]*$"
-                read_disk "MOUNT_DIR"    "..请输入挂载点" "/mnt/dir" "^/[A-Za-z0-9_][A-Za-z0-9/_\-]*$"
+                echo ""
+                echo -n "....请输入设备名称 ${NUMBER} (例如:/dev/sdb${NUM}): "
+                read MOUNT_DEVICE
+                
+                MOUNT_DEVICE=$(echo "$MOUNT_DEVICE" | sed "s/[ \t]//g")
+                
+                if [[ "$MOUNT_DEVICE" == "Q" ]] || [[ "$MOUNT_DEVICE" == "QUIT" ]] \
+                || [[ "$MOUNT_DEVICE" == "q" ]] || [[ "$MOUNT_DEVICE" == "quit" ]]; then
+                        break 1
+                fi
+                
+                if ( ! echo "$MOUNT_DEVICE" | grep "^/dev/[A-Za-z][A-Za-z0-9/_\-]*$" &> ${NULL_TMP} ); then
+                        echo_error
+                        continue 1
+                fi
+                
+                echo ""
+                echo -n "......请输入挂载点 ${NUMBER} (例如:/mnt/dir${NUM}): "
+                read MOUNT_DIR
+                
+                MOUNT_DIR=$(echo "$MOUNT_DIR" | sed "s/[ \t]//g")
+                
+                if [[ "$MOUNT_DIR" == "Q" ]] || [[ "$MOUNT_DIR" == "QUIT" ]] \
+                || [[ "$MOUNT_DIR" == "q" ]] || [[ "$MOUNT_DIR" == "quit" ]]; then
+                        break 1
+                fi
+                
+                if ( ! echo "$MOUNT_DIR" | grep "^/[A-Za-z0-9_][A-Za-z0-9/_\-]*$" &> ${NULL_TMP} ); then
+                        echo_error
+                        continue 1
+                fi
                 
                 echo "DEVICE: ${MOUNT_DEVICE} DIR: ${MOUNT_DIR}" >> ${DISK_TMP}
                 
@@ -202,4 +198,3 @@ echo ""
 read -n1 -p "请按任意键开始安装... "
 
 #### End
-history -c
