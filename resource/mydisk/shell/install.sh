@@ -6,6 +6,7 @@ set -eu
 UDISK_ROOT="/$(pwd | cut -d/ -f 2)"
 NULL_TMP="${UDISK_ROOT}/mydisk/tmp/null.tmp"
 SEQ_MAX="100"
+IP_FORMAT="^[0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*$"
 
 #### Function
 echo_error()
@@ -46,11 +47,11 @@ mkdir -p ${UDISK_ROOT}/mydisk/tmp
 echo "正在配置 CentOS:"
 echo ""
 
-read_var "IPADDR" "....请输入你的IP" "192.168.1.5" "^[0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*$" "break" "echo_error"
-read_var "" "" "" "" "" ""
-read_var "" "" "" "" "" ""
-read_var "" "" "" "" "" ""
-read_var "" "" "" "" "" ""
-read_var "" "" "" "" "" ""
+read_var "IPADDR"         "....请输入你的IP" "192.168.1.5"     "$IP_FORMAT"                   "break"      "echo_error"
+read_var "GATEWAY"        "..请输入你的网关" "192.168.1.1"     "$IP_FORMAT"                   "break"      "echo_error"
+read_var "DNS"            "...请输入你的DNS" "114.114.114.114" "$IP_FORMAT"                   "break"      "echo_error"
+read_var "HOSTNAME"       "请输入你的主机名" "mydisk"          "^[A-Za-z_][A-Za-z0-9_\-\.]*$" "break"      "echo_error"
+read_var "ROOT_PASSWORD"  "..请输入root密码" "123456"          "'"                            "echo_error" "break"
+read_var "ADMIN_PASSWORD" ".请输入admin密码" "123456"          "'"                            "echo_error" "break"
 
 #### End
