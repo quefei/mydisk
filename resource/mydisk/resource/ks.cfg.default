@@ -1,0 +1,55 @@
+auth --enableshadow --passalgo=sha512
+harddrive --partition=sdb1 --dir=/
+text
+network --bootproto=static --onboot=on --ip=##CUSTOM##IP## --netmask=255.255.255.0 --gateway=##CUSTOM##GATEWAY## --nameserver=##CUSTOM##DNS##
+network --hostname=##CUSTOM##HOSTNAME##
+timezone Asia/Shanghai --isUtc --nontp
+keyboard --vckeymap=us --xlayouts='us' --switch='grp:ctrl_shift_toggle'
+lang en_US.UTF-8 --addsupport=zh_CN.UTF-8
+rootpw --iscrypted $6$voVz0lpw$i1anVDeJYoAzp2BwynwTCdgaUr3Kp/P4G4.umZGYv4Xwzy4N8/gvIDthZqk89NmbLHNUCKLpFepYRpu4yhI9Y1
+user --groups=wheel --name=admin --password=$6$voVz0lpw$i1anVDeJYoAzp2BwynwTCdgaUr3Kp/P4G4.umZGYv4Xwzy4N8/gvIDthZqk89NmbLHNUCKLpFepYRpu4yhI9Y1 --iscrypted --gecos="admin"
+services --disabled="chronyd"
+firstboot --disable
+selinux --disabled
+firewall --enabled
+
+
+bootloader --append=" crashkernel=auto" --location=mbr --boot-drive=sda
+clearpart --all --initlabel --drives=sda
+part        biosboot      --fstype="biosboot"    --ondisk=sda     --size=2
+part        /boot         --fstype="xfs"         --ondisk=sda     --size=1024
+part        pv.100        --fstype="lvmpv"       --ondisk=sda     --grow
+volgroup    centos        --pesize=4096          pv.100
+logvol      swap          --fstype="swap"        --size=8192      --name=swap         --vgname=centos
+# 500G, 465G, 100g 50g 50g 256g
+logvol      /             --fstype="xfs"         --size=102400    --name=root         --vgname=centos
+logvol      /var          --fstype="xfs"         --size=51200     --name=var          --vgname=centos
+logvol      /home         --fstype="xfs"         --size=51200     --name=home         --vgname=centos
+logvol      /usr/local    --fstype="xfs"         --size=262144    --name=usr_local    --vgname=centos
+
+
+##CUSTOM##REBOOT##
+%packages
+@^minimal
+@core
+kexec-tools
+%end
+%pre
+%end
+%post
+
+
+####
+
+
+##CUSTOM##ADD##
+
+
+%end
+%addon com_redhat_kdump --enable --reserve-mb='auto'
+%end
+%anaconda
+pwpolicy root --minlen=6 --minquality=50 --notstrict --nochanges --notempty
+pwpolicy user --minlen=6 --minquality=50 --notstrict --nochanges --notempty
+pwpolicy luks --minlen=6 --minquality=50 --notstrict --nochanges --notempty
+%end
