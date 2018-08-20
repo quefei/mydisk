@@ -1,0 +1,2 @@
+/resource/mydisk/resource/*.iso filter=lfs diff=lfs merge=lfs -text
+/resource/mydisk/resource/*.exe filter=lfs diff=lfs merge=lfs -text
