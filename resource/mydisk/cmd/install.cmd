@@ -7,14 +7,14 @@ set KeyName=HKLM\SYSTEM\CurrentControlSet\Services\USBSTOR\Enum
 REM U盘卷标
 for /f "tokens=1-3" %%a in ('wmic logicaldisk get Description^,DeviceID^,VolumeName 2^>nul') do (
         if /i "%%a"=="可移动磁盘" (
-                if /i "%%b\udisk\cmd\"=="%~dp0" (
+                if /i "%%b\mydisk\cmd\"=="%~dp0" (
                         set DeviceID=%%b
                 )
         )
 )
 
 if defined DeviceID (
-        label %DeviceID% UDISK
+        label %DeviceID% MYDISK
 ) else (
         echo,Error: 请将此程序复制到U盘根目录下运行!
         pause>nul
@@ -41,11 +41,11 @@ echo,
 echo,请按任意键继续...
 pause>nul
 
-if not exist %~d0\udisk\tmp (
-        mkdir %~d0\udisk\tmp
+if not exist %~d0\mydisk\tmp (
+        mkdir %~d0\mydisk\tmp
 )
 
-type nul>%~d0\udisk\tmp\attr.tmp
+type nul>%~d0\mydisk\tmp\udisk.tmp
 
 for /f "tokens=1-3" %%a in ('reg query "%KeyName%" /v Count 2^>nul') do (
         if /i "%%a"=="Count" (
@@ -65,7 +65,7 @@ for /l %%a in (1,1,%CountVar%) do (
                         set PID=!Attr:~17,4!
                         set SN=!Attr:~22!
                         
-                        echo,VID: !VID! PID: !PID! SN: !SN!>>%~d0\udisk\tmp\attr.tmp
+                        echo,VID: !VID! PID: !PID! SN: !SN!>>%~d0\mydisk\tmp\udisk.tmp
                 )
         )
 )
@@ -74,12 +74,12 @@ endlocal
 
 REM 安装GitBash
 if not exist %GitBash% (
-        if exist %~d0\udisk\resource\Git-2.18.0-64-bit.exe (
+        if exist %~d0\mydisk\resource\Git-2.18.0-64-bit.exe (
                 cls
                 echo,正在安装 请稍后...
-                start /wait %~d0\udisk\resource\Git-2.18.0-64-bit.exe /sp- /silent /norestart
+                start /wait %~d0\mydisk\resource\Git-2.18.0-64-bit.exe /sp- /silent /norestart
         ) else (
-                echo,Error: %~d0\udisk\resource\Git-2.18.0-64-bit.exe 文件不存在!
+                echo,Error: %~d0\mydisk\resource\Git-2.18.0-64-bit.exe 文件不存在!
                 pause>nul
                 exit
         )
@@ -92,10 +92,10 @@ if not exist %GitBash% (
 )
 
 REM 运行install.sh
-if exist %~d0\udisk\shell\install.sh (
-        start %GitBash% %~d0\udisk\shell\install.sh
+if exist %~d0\mydisk\shell\install.sh (
+        start %GitBash% %~d0\mydisk\shell\install.sh
 ) else (
-        echo,Error: %~d0\udisk\shell\install.sh 文件不存在!
+        echo,Error: %~d0\mydisk\shell\install.sh 文件不存在!
         pause>nul
         exit
 )
