@@ -104,7 +104,6 @@ exit
 
 :EchoError
 setlocal
-
 set Message=%~1
 
 if not defined Message (
@@ -114,8 +113,5 @@ if not defined Message (
 echo,Error: %Message%!
 pause>nul
 exit
-
-(endlocal
-
-)
+(endlocal)
 goto:eof
