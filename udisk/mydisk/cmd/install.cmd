@@ -1,8 +1,11 @@
 @echo off
 title %~nx0
 
-set GitBash="C:\Program Files\Git\git-bash.exe"
+set UdiskLabel=MYDISK
 set KeyName=HKLM\SYSTEM\CurrentControlSet\Services\USBSTOR\Enum
+set Git=Git-2.18.0-64-bit.exe
+set GitSrc=%~d0\mydisk\resource\%Git%
+set GitBash="C:\Program Files\Git\git-bash.exe"
 
 REM UÅÌ¾í±ê
 for /f "tokens=1-3" %%a in ('wmic logicaldisk get Description^,DeviceID^,VolumeName 2^>nul') do (
