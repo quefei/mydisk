@@ -1,2 +1,1 @@
-/resource/mydisk/resource/CentOS-7-x86_64-Minimal-1804.iso
-/resource/Mydisk*.exe
+/udisk/mydisk/resource/*.iso
