@@ -6,12 +6,14 @@ set -eu
 UDISK_ROOT="/$(pwd | cut -d/ -f 2)"
 NULL_TMP="${UDISK_ROOT}/mydisk/tmp/null.tmp"
 
+KS_CFG_DEFAULT="${UDISK_ROOT}/mydisk/resource/ks.cfg.default"
+UDISK_TMP="${UDISK_ROOT}/mydisk/tmp/udisk.tmp"
 DISK_TMP="${UDISK_ROOT}/mydisk/tmp/disk.tmp"
 
 SEQ_MAX="100"
 IP_FORMAT="^[0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*$"
 HN_FORMAT="^[A-Za-z_][A-Za-z0-9_\-\.]*$"
-
+REBOOT="reboot"
 NUMBER=
 NUM=
 
@@ -62,6 +64,16 @@ read_disk()
         || [[ "$VAR" == "q" ]] || [[ "$VAR" == "quit" ]]; then
                 VAR="Q"
         fi
+}
+
+check_file()
+{
+        if [[ ! -s "$1" ]]; then
+                read -n1 -p "Error: ${1} 文件不存在! "
+                exit 1
+        fi
+        
+        sed -i "s/\r$//g" ${1}
 }
 
 #### Operation
@@ -119,6 +131,68 @@ if [[ "$MOUNT_DISK" == "Y" ]] || [[ "$MOUNT_DISK" == "YES" ]]; then
 fi
 
 ## screen 3
+clear
+echo "配置完成!"
+echo ""
+
+check_file "$KS_CFG_DEFAULT"
+cp -af ${KS_CFG_DEFAULT} ${UDISK_ROOT}/ks.cfg
+
+echo ""
+echo "..........你的IP: ${IPADDR}"
+echo "........你的网关: ${GATEWAY}"
+echo ".........你的DNS: ${DNS}"
+echo ""
+echo "......你的主机名: ${HOSTNAME}"
+echo ""
+echo "........root密码: ${ROOT_PASSWORD}"
+echo ".......admin密码: ${ADMIN_PASSWORD}"
+
+if [[ "$MOUNT_UDISK" == "Y" ]] || [[ "$MOUNT_UDISK" == "YES" ]]; then
+        check_file "$UDISK_TMP"
+        echo ""
+        
+        nl -n rz -w 2 ${UDISK_TMP} | while read LINE; do
+                NUMBER=$(echo "$LINE" | cut -f 1)
+                UDISK_VID=$(echo "$LINE" | cut -d" " -f 2)
+                UDISK_PID=$(echo "$LINE" | cut -d" " -f 4)
+                UDISK_SN=$(echo "$LINE" | cut -d" " -f 6)
+                
+                echo "....U盘序列号 ${NUMBER}: ${UDISK_SN}"
+                
+                sed -i "/##CUSTOM##ADD##/a\mount_udisk \"${UDISK_VID}\" \"${UDISK_PID}\" \"${UDISK_SN}\"" ${UDISK_ROOT}/ks.cfg
+        done
+fi
+
+if [[ "$MOUNT_DISK" == "Y" ]] || [[ "$MOUNT_DISK" == "YES" ]]; then
+        check_file "$DISK_TMP"
+        REBOOT="poweroff"
+        
+        nl -n rz -w 2 ${DISK_TMP} | while read LINE; do
+                NUMBER=$(echo "$LINE" | cut -f 1)
+                MOUNT_DEVICE=$(echo "$LINE" | cut -d" " -f 2)
+                MOUNT_DIR=$(echo "$LINE" | cut -d" " -f 4)
+                
+                echo ""
+                echo ".....设备名称 ${NUMBER}: ${MOUNT_DEVICE}"
+                echo ".......挂载点 ${NUMBER}: ${MOUNT_DIR}"
+                
+                sed -i "/##CUSTOM##ADD##/a\mount_disk \"${MOUNT_DIR}\" \"${MOUNT_DEVICE}\"" ${UDISK_ROOT}/ks.cfg
+        done
+fi
+
+sed -i "/##CUSTOM##ADD##/a\echo '${ADMIN_PASSWORD}' | passwd --stdin admin" ${UDISK_ROOT}/ks.cfg
+sed -i "/##CUSTOM##ADD##/a\echo '${ROOT_PASSWORD}'  | passwd --stdin root"  ${UDISK_ROOT}/ks.cfg
+
+sed -i "s/##CUSTOM##IP##/${IPADDR}/g"         ${UDISK_ROOT}/ks.cfg
+sed -i "s/##CUSTOM##GATEWAY##/${GATEWAY}/g"   ${UDISK_ROOT}/ks.cfg
+sed -i "s/##CUSTOM##DNS##/${DNS}/g"           ${UDISK_ROOT}/ks.cfg
+sed -i "s/##CUSTOM##HOSTNAME##/${HOSTNAME}/g" ${UDISK_ROOT}/ks.cfg
+sed -i "s/##CUSTOM##REBOOT##/${REBOOT}/g"     ${UDISK_ROOT}/ks.cfg
+
+echo ""
+echo ""
+read -n1 -p "请按任意键开始安装... "
 
 ## screen 4
 
