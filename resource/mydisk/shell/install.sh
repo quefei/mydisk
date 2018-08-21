@@ -4,16 +4,24 @@ set -eu
 
 #### Variable
 UDISK_ROOT="/$(pwd | cut -d/ -f 2)"
-NULL_TMP="${UDISK_ROOT}/mydisk/tmp/null.tmp"
-
 KS_CFG_DEFAULT="${UDISK_ROOT}/mydisk/resource/ks.cfg.default"
+NULL_TMP="${UDISK_ROOT}/mydisk/tmp/null.tmp"
 UDISK_TMP="${UDISK_ROOT}/mydisk/tmp/udisk.tmp"
 DISK_TMP="${UDISK_ROOT}/mydisk/tmp/disk.tmp"
+DOWNLOAD_TMP="${UDISK_ROOT}/mydisk/tmp/download.tmp"
+
+DOWNLOAD_URL="https://gitee.com/quefei/mydisk/raw/master/resource/ol/resource/CentOS-7-x86_64-Minimal-1804.iso.download"
+
+CENTOS_MD5="fabdc67ff3a1674a489953effa285dfd"
+CENTOS_ISO="CentOS-7-x86_64-Minimal-1804.iso"
+CENTOS_ISO_ROOT="${UDISK_ROOT}/${CENTOS_ISO}"
+CENTOS_ISO_RES="${UDISK_ROOT}/mydisk/resource/${CENTOS_ISO}"
 
 SEQ_MAX="100"
+REBOOT="reboot"
+
 IP_FORMAT="^[0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*$"
 HN_FORMAT="^[A-Za-z_][A-Za-z0-9_\-\.]*$"
-REBOOT="reboot"
 NUMBER=
 NUM=
 
@@ -195,5 +203,39 @@ echo ""
 read -n1 -p "请按任意键开始安装... "
 
 ## screen 4
+clear
+echo "正在安装 请稍后..."
+
+for NUM in $(seq ${SEQ_MAX}); do
+          if [[ -s "$CENTOS_ISO_ROOT" ]] && [[ "$CENTOS_MD5" == "$(md5sum ${CENTOS_ISO_ROOT} | cut -d' ' -f 1)" ]]; then
+                break
+        elif [[ -s "$CENTOS_ISO_RES" ]]; then
+                mv ${CENTOS_ISO_RES} ${CENTOS_ISO_ROOT}
+        else
+                curl -sSo ${DOWNLOAD_TMP} ${DOWNLOAD_URL} &> ${NULL_TMP} || true
+                check_file "$DOWNLOAD_TMP"
+                curl -o ${CENTOS_ISO_ROOT} $(head -1 ${DOWNLOAD_TMP})
+        fi
+done
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 #### End
