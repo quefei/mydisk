@@ -101,3 +101,21 @@ if exist %~d0\mydisk\shell\install.sh (
 )
 
 exit
+
+:EchoError
+setlocal
+
+set Message=%~1
+
+if not defined Message (
+        set Message=Î´Öª´íÎó
+)
+
+echo,Error: %Message%!
+pause>nul
+exit
+
+(endlocal
+
+)
+goto:eof
