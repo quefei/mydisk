@@ -32,10 +32,10 @@ DEFAULT_PASSWORD="123456"
 COMPLETE="reboot"
 MAX="100"
 
-IP_FORMAT="^[0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*$"
-HOSTNAME_FORMAT="^[A-Za-z_][A-Za-z0-9_\-\.]*$"
-DEVICE_FORMAT="^/dev/[A-Za-z][A-Za-z0-9/_\-]*$"
-DIR_FORMAT="^/[A-Za-z0-9_][A-Za-z0-9/_\-]*$"
+IP_REGEXP="^[0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*$"
+HOSTNAME_REGEXP="^[A-Za-z_][A-Za-z0-9_\-\.]*$"
+DEVICE_REGEXP="^/dev/[A-Za-z][A-Za-z0-9/_\-]*$"
+DIR_REGEXP="^/[A-Za-z0-9_][A-Za-z0-9/_\-]*$"
 
 NUMBER=
 NUM=
