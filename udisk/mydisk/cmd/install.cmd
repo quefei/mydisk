@@ -17,11 +17,9 @@ for /f "tokens=1-3" %%a in ('wmic logicaldisk get Description^,DeviceID^,VolumeN
 )
 
 if defined DeviceID (
-        label %DeviceID% MYDISK
+        label %DeviceID% %UdiskLabel%
 ) else (
-        echo,Error: 请将此程序复制到U盘根目录下运行!
-        pause>nul
-        exit
+        call :EchoError "请将此程序复制到U盘根目录下运行"
 )
 
 REM 复制uninstall.cmd
