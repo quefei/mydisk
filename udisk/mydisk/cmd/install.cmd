@@ -22,17 +22,6 @@ if defined DeviceID (
         call :EchoError "请将此程序复制到U盘根目录下运行"
 )
 
-REM 复制uninstall.cmd
-if not exist %~d0\LMT (
-        mkdir %~d0\LMT
-)
-
-if exist %~dp0uninstall.cmd (
-        copy /y %~dp0uninstall.cmd %~d0\LMT>nul
-) else (
-        call :EchoError "%~dp0uninstall.cmd 文件不存在"
-)
-
 REM U盘属性值
 echo,如果需要自动挂载额外的U盘, 请插入U盘!
 echo,
