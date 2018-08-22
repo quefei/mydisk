@@ -4,7 +4,7 @@ set -eu
 
 #### Variable
 ROOTDIR="/$(pwd | cut -d/ -f 2)"
-SCRIPT_LIST="var.sh func.sh"
+SCRIPT_LIST="variable.sh function.sh"
 
 #### Operation
 for SCRIPT in ${SCRIPT_LIST}; do
