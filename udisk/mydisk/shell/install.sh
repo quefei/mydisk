@@ -2,21 +2,33 @@
 
 set -eu
 
+#### Variable
+ROOTDIR="/$(pwd | cut -d/ -f 2)"
 SCRIPT_LIST="var.sh func.sh"
 
+#### Operation
 for SCRIPT in ${SCRIPT_LIST}; do
-        if [[ -s "$SCRIPT" ]]; then
-                . "$SCRIPT"
+        SCRIPT_PATH="${ROOTDIR}/mydisk/shell/${SCRIPT}"
+        
+        if [[ -s "$SCRIPT_PATH" ]]; then
+                . ${SCRIPT_PATH}
         else
-                read -n1 -p "Error: ${SCRIPT} not found"
+                read -n1 -p "Error: ${SCRIPT_PATH} not found"
                 exit 1
         fi
 done
 
-#### Variable
 
-#### Function
 
-#### Operation
+
+
+
+
+
+
+
+
+
+
 
 #### End
