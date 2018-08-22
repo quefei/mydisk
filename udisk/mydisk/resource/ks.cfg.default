@@ -28,7 +28,7 @@ logvol      /home         --fstype="xfs"         --size=51200     --name=home   
 logvol      /usr/local    --fstype="xfs"         --size=262144    --name=usr_local    --vgname=centos
 
 
-##CUSTOM##REBOOT##
+##CUSTOM##COMPLETE##
 %packages
 @^minimal
 @core
