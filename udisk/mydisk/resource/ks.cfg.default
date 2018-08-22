@@ -1,7 +1,7 @@
 auth --enableshadow --passalgo=sha512
 harddrive --partition=sdb1 --dir=/
 text
-network --bootproto=static --onboot=on --ip=##CUSTOM##IP## --netmask=255.255.255.0 --gateway=##CUSTOM##GATEWAY## --nameserver=##CUSTOM##DNS##
+network --bootproto=static --onboot=on --ip=##CUSTOM##IPADDR## --netmask=255.255.255.0 --gateway=##CUSTOM##GATEWAY## --nameserver=##CUSTOM##DNS##
 network --hostname=##CUSTOM##HOSTNAME##
 timezone Asia/Shanghai --isUtc --nontp
 keyboard --vckeymap=us --xlayouts='us' --switch='grp:ctrl_shift_toggle'

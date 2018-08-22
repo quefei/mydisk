@@ -23,11 +23,17 @@ NULL="${ROOTDIR}/mydisk/tmp/null.tmp"
 DISK="${ROOTDIR}/mydisk/tmp/disk.tmp"
 UDISK="${ROOTDIR}/mydisk/tmp/udisk.tmp"
 
-MAX="100"
-COMPLETE="reboot"
+DEFAULT_IPADDR="192.168.1.5"
+DEFAULT_GATEWAY="192.168.1.1"
+DEFAULT_DNS="114.114.114.114"
+DEFAULT_HOSTNAME="mydisk"
+DEFAULT_PASSWORD="123456"
 
-IP_FORMAT="^[0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*$"
-HN_FORMAT="^[A-Za-z_][A-Za-z0-9_\-\.]*$"
+COMPLETE="reboot"
+MAX="100"
+
+IPADDR_FORMAT="^[0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*$"
+HOSTNAME_FORMAT="^[A-Za-z_][A-Za-z0-9_\-\.]*$"
 
 NUMBER=
 NUM=
