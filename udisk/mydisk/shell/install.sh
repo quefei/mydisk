@@ -18,7 +18,9 @@ for SCRIPT in ${SCRIPT_LIST}; do
         fi
 done
 
+mkdir -p ${ROOTDIR}/mydisk/tmp
 
+## screen 1
 
 
 
