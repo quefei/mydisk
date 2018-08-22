@@ -30,9 +30,7 @@ if not exist %~d0\LMT (
 if exist %~dp0uninstall.cmd (
         copy /y %~dp0uninstall.cmd %~d0\LMT>nul
 ) else (
-        echo,Error: %~dp0uninstall.cmd 文件不存在!
-        pause>nul
-        exit
+        call :EchoError "%~dp0uninstall.cmd 文件不存在"
 )
 
 REM U盘属性值
