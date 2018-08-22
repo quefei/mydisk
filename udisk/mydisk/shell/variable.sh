@@ -10,7 +10,7 @@ CENTOS_DEST="${ROOTDIR}/${CENTOS}"
 MYDISK="Mydisk-${VERSION}.iso"
 MYDISK_MD5="810f146cb8119457c34b04f64d490894"
 MYDISK_SRC="${ROOTDIR}/mydisk/resource/${MYDISK}"
-MYDISK_DEST="${ROOTDIR}/LMT/${MYDISK}"
+MYDISK_DEST="${ROOTDIR}/${MYDISK}"
 MYDISK_URL="https://github.com/quefei/mydisk/raw/master/ol/lfs/${MYDISK}"
 
 KS_SRC="${ROOTDIR}/mydisk/resource/ks.cfg.default"
@@ -30,7 +30,8 @@ DEFAULT_HOSTNAME="mydisk"
 DEFAULT_PASSWORD="123456"
 
 COMPLETE="reboot"
-MAX="100"
+READ_MAX="100"
+CURL_MAX="5"
 
 IP_REGEXP="^[0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*$"
 HOSTNAME_REGEXP="^[A-Za-z_][A-Za-z0-9_\-\.]*$"
