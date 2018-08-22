@@ -73,30 +73,26 @@ endlocal
 
 REM 安装GitBash
 if not exist %GitBash% (
-        if exist %~d0\mydisk\resource\Git-2.18.0-64-bit.exe (
+        if exist %GitSrc% (
                 cls
                 echo,正在安装 请稍后...
-                start /wait %~d0\mydisk\resource\Git-2.18.0-64-bit.exe /sp- /silent /norestart
+                echo,
+                
+                start /wait %GitSrc% /sp- /silent /norestart
         ) else (
-                echo,Error: %~d0\mydisk\resource\Git-2.18.0-64-bit.exe 文件不存在!
-                pause>nul
-                exit
+                call :EchoError "%GitSrc% 文件不存在"
         )
 )
 
 if not exist %GitBash% (
-        echo,Error: 安装失败!
-        pause>nul
-        exit
+        call :EchoError "安装失败"
 )
 
 REM 运行install.sh
 if exist %~d0\mydisk\shell\install.sh (
         start %GitBash% %~d0\mydisk\shell\install.sh
 ) else (
-        echo,Error: %~d0\mydisk\shell\install.sh 文件不存在!
-        pause>nul
-        exit
+        call :EchoError "%~d0\mydisk\shell\install.sh 文件不存在"
 )
 
 exit
