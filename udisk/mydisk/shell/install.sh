@@ -177,4 +177,9 @@ echo_head "安装完成!"
 
 read_tail "退出"
 
+#### End
+if [[ -s "$LOG" ]]; then
+        sed -i "s/$/\r/g" ${LOG}
+fi
+
 exit 0
