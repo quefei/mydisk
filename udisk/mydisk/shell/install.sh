@@ -56,4 +56,6 @@ echo $DNS
 echo $HOSTNAME
 echo $ROOT_PASSWORD
 echo $ADMIN_PASSWORD
+echo $MOUNT_UDISK
+echo $MOUNT_DISK
 read_tail "ivan"

@@ -64,7 +64,12 @@ config_centos()
 use_mount()
 {
         read_command "${1} [Y/N]"
+        
         READ_VAR=$(echo "$READ_VAR" | tr "[a-z]" "[A-Z]")
+        
+        if [[ "$READ_VAR" == "YES" ]]; then
+                READ_VAR="Y"
+        fi
 }
 
 
