@@ -47,7 +47,16 @@ if [[ "$MOUNT_DISK" == "Y" ]]; then
         for NUM in $(seq ${READ_MAX}); do
                 NUMBER=$(printf "%02d\n" ${NUM})
                 
+                config_disk "请输入设备名称" "/dev/sdb" && MOUNT_DEVICE="$READ_VAR"
                 
+                if [[ "$MOUNT_DEVICE" == "Q" ]]; then
+                        break 1
+                fi
+                
+                if ( ! echo "$MOUNT_DEVICE" | grep "$DEVICE_REGEXP" &> ${NULL} ); then
+                        echo_error
+                        continue 1
+                fi
         done
 fi
 
