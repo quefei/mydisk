@@ -158,20 +158,6 @@ if [[ "$NUM" == "$CURL_MAX" ]]; then
         read_error "${CENTOS} 下载失败"
 fi
 
-for NUM in $(seq ${CURL_MAX}); do
-        if [[ -s "$MYDISK_DEST" ]] && [[ "$MYDISK_MD5" == "$(md5sum ${MYDISK_DEST} | cut -d' ' -f 1)" ]]; then
-                break
-        elif [[ -s "$MYDISK_SRC" ]]; then
-                mv ${MYDISK_SRC} ${MYDISK_DEST}
-        else
-                curl -o ${MYDISK_DEST} ${MYDISK_URL}
-        fi
-done
-
-if [[ "$NUM" == "$CURL_MAX" ]]; then
-        read_error "${MYDISK} 下载失败"
-fi
-
 ## display 5
 echo_head "安装完成!"
 
