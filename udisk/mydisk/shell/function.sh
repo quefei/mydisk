@@ -35,10 +35,31 @@ check_file()
         sed -i "s/\r$//g" ${1}
 }
 
+read_command()
+{
+        echo ""
+        echo -n "....${1}: "
+        read READ_VAR
+        
+        READ_VAR=$(echo "$READ_VAR" | sed "s/[ \t]//g")
+}
 
-
-
-
+config_centos()
+{
+        for NUM in $(seq ${READ_MAX}); do
+                read_command "${1} (默认:${2})"
+                
+                if [[ -z "$READ_VAR" ]]; then
+                        READ_VAR="$2"
+                fi
+                
+                if ( echo "$READ_VAR" | grep "$3" &> ${NULL} ); then
+                        "$4"
+                else
+                        "$5"
+                fi
+        done
+}
 
 
 
