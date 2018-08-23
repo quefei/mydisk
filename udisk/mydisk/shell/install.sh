@@ -140,25 +140,41 @@ read_tail "开始安装"
 ## display 4
 echo_head "正在安装 请稍后..."
 
+for NUM in $(seq ${CURL_MAX}); do
+        if [[ -s "$CENTOS_DEST" ]] && [[ "$CENTOS_MD5" == "$(md5sum ${CENTOS_DEST} | cut -d' ' -f 1)" ]]; then
+                break 1
+        elif [[ -s "$CENTOS_SRC" ]]; then
+                mv ${CENTOS_SRC} ${CENTOS_DEST}
+        else
+                curl -sSo ${DOWNLOAD_DEST} ${DOWNLOAD_URL} &> ${NULL} || true
+                check_file "$DOWNLOAD_DEST"
+                
+                CENTOS_URL=$(head -1 ${DOWNLOAD_DEST})
+                curl -o ${CENTOS_DEST} ${CENTOS_URL}
+        fi
+done
 
+if [[ "$NUM" == "$CURL_MAX" ]]; then
+        read_error "${CENTOS} 下载失败"
+fi
 
+for NUM in $(seq ${CURL_MAX}); do
+        if [[ -s "$MYDISK_DEST" ]] && [[ "$MYDISK_MD5" == "$(md5sum ${MYDISK_DEST} | cut -d' ' -f 1)" ]]; then
+                break 1
+        elif [[ -s "$MYDISK_SRC" ]]; then
+                mv ${MYDISK_SRC} ${MYDISK_DEST}
+        else
+                curl -o ${MYDISK_DEST} ${MYDISK_URL}
+        fi
+done
 
+if [[ "$NUM" == "$CURL_MAX" ]]; then
+        read_error "${MYDISK} 下载失败"
+fi
 
+## display 5
+echo_head "安装完成!"
 
+read_tail "退出"
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#### End
+exit 0

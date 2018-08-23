@@ -33,7 +33,7 @@ DEFAULT_PASSWORD="123456"
 
 COMPLETE="reboot"
 READ_MAX="100"
-CURL_MAX="3"
+CURL_MAX="5"
 
 IP_REGEXP="^[0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*$"
 HOSTNAME_REGEXP="^[A-Za-z_][A-Za-z0-9_\-\.]*$"
