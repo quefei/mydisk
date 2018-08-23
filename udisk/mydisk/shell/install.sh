@@ -57,6 +57,19 @@ if [[ "$MOUNT_DISK" == "Y" ]]; then
                         echo_error
                         continue 1
                 fi
+                
+                config_disk "..请输入挂载点" "/mnt/dir" && MOUNT_DIR="$READ_VAR"
+                
+                if [[ "$MOUNT_DIR" == "Q" ]]; then
+                        break 1
+                fi
+                
+                if ( ! echo "$MOUNT_DIR" | grep "$DIR_REGEXP" &> ${NULL} ); then
+                        echo_error
+                        continue 1
+                fi
+                
+                echo "DEVICE: ${MOUNT_DEVICE} DIR: ${MOUNT_DIR}" >> ${DISK}
         done
 fi
 
