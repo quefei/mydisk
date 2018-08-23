@@ -13,7 +13,7 @@ for SCRIPT in ${SCRIPT_LIST}; do
         if [[ -s "$SCRIPT_PATH" ]]; then
                 . ${SCRIPT_PATH}
         else
-                read -n1 -p "Error: ${SCRIPT_PATH} not found"
+                read -n1 -p "Error: ${SCRIPT_PATH} not found! "
                 exit 1
         fi
 done

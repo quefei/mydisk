@@ -35,6 +35,7 @@ CURL_MAX="5"
 
 IP_REGEXP="^[0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*$"
 HOSTNAME_REGEXP="^[A-Za-z_][A-Za-z0-9_\-\.]*$"
+PASSWORD_REGEXP="'"
 DEVICE_REGEXP="^/dev/[A-Za-z][A-Za-z0-9/_\-]*$"
 DIR_REGEXP="^/[A-Za-z0-9_][A-Za-z0-9/_\-]*$"
 
