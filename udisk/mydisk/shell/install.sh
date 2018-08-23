@@ -110,8 +110,6 @@ fi
 
 if [[ "$MOUNT_DISK" == "Y" ]]; then
         check_file "$DISK"
-        echo ""
-        
         COMPLETE="poweroff"
         
         nl -n rz -w 2 ${DISK} | while read LINE; do
@@ -120,6 +118,7 @@ if [[ "$MOUNT_DISK" == "Y" ]]; then
                 MOUNT_DEVICE=$(echo "$LINE" | cut -d" " -f 2)
                 MOUNT_DIR=$(echo "$LINE" | cut -d" " -f 4)
                 
+                echo ""
                 echo ".....设备名称 ${NUMBER}: ${MOUNT_DEVICE}"
                 echo ".......挂载点 ${NUMBER}: ${MOUNT_DIR}"
                 
