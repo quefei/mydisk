@@ -137,8 +137,8 @@ sed -i "s/##CUSTOM##COMPLETE##/${COMPLETE}/g" ${KS_DEST}
 
 read_tail "开始安装"
 
-
-
+## display 4
+echo_head "正在安装 请稍后..."
 
 
 
