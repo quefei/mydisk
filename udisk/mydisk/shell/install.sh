@@ -83,11 +83,58 @@ echo ""
 echo "..........你的IP: ${IPADDR}"
 echo "........你的网关: ${GATEWAY}"
 echo ".........你的DNS: ${DNS}"
+
 echo ""
 echo "......你的主机名: ${HOSTNAME}"
+
 echo ""
 echo "........root密码: ${ROOT_PASSWORD}"
 echo ".......admin密码: ${ADMIN_PASSWORD}"
+
+if [[ "$MOUNT_UDISK" == "Y" ]]; then
+        check_file "$UDISK"
+        echo ""
+        
+        nl -n rz -w 2 ${UDISK} | while read LINE; do
+                NUMBER=$(echo "$LINE" | cut -f 1)
+                
+                UDISK_VID=$(echo "$LINE" | cut -d" " -f 2)
+                UDISK_PID=$(echo "$LINE" | cut -d" " -f 4)
+                UDISK_SN=$(echo "$LINE" | cut -d" " -f 6)
+                
+                echo "....U盘序列号 ${NUMBER}: ${UDISK_SN}"
+                
+                sed -i "/##CUSTOM##ADD##/a\mount_udisk \"${UDISK_VID}\" \"${UDISK_PID}\" \"${UDISK_SN}\"" ${KS_DEST}
+        done
+fi
+
+if [[ "$MOUNT_DISK" == "Y" ]]; then
+        check_file "$DISK"
+        echo ""
+        
+        COMPLETE="poweroff"
+        
+        nl -n rz -w 2 ${DISK} | while read LINE; do
+                NUMBER=$(echo "$LINE" | cut -f 1)
+                
+                MOUNT_DEVICE=$(echo "$LINE" | cut -d" " -f 2)
+                MOUNT_DIR=$(echo "$LINE" | cut -d" " -f 4)
+                
+                echo ".....设备名称 ${NUMBER}: ${MOUNT_DEVICE}"
+                echo ".......挂载点 ${NUMBER}: ${MOUNT_DIR}"
+                
+                sed -i "/##CUSTOM##ADD##/a\mount_disk \"${MOUNT_DIR}\" \"${MOUNT_DEVICE}\"" ${KS_DEST}
+        done
+fi
+
+sed -i "/##CUSTOM##ADD##/a\echo '${ADMIN_PASSWORD}' | passwd --stdin admin" ${KS_DEST}
+sed -i "/##CUSTOM##ADD##/a\echo '${ROOT_PASSWORD}'  | passwd --stdin root"  ${KS_DEST}
+
+sed -i "s/##CUSTOM##IPADDR##/${IPADDR}/g"     ${KS_DEST}
+sed -i "s/##CUSTOM##GATEWAY##/${GATEWAY}/g"   ${KS_DEST}
+sed -i "s/##CUSTOM##DNS##/${DNS}/g"           ${KS_DEST}
+sed -i "s/##CUSTOM##HOSTNAME##/${HOSTNAME}/g" ${KS_DEST}
+sed -i "s/##CUSTOM##COMPLETE##/${COMPLETE}/g" ${KS_DEST}
 
 read_tail "开始安装"
 
