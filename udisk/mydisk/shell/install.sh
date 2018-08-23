@@ -50,23 +50,23 @@ if [[ "$MOUNT_DISK" == "Y" ]]; then
                 config_disk "请输入设备名称" "/dev/sdb" && MOUNT_DEVICE="$READ_VAR"
                 
                 if [[ "$MOUNT_DEVICE" == "Q" ]]; then
-                        break 1
+                        break
                 fi
                 
                 if ( ! echo "$MOUNT_DEVICE" | grep "$DEVICE_REGEXP" &> ${NULL} ); then
                         echo_error
-                        continue 1
+                        continue
                 fi
                 
                 config_disk "..请输入挂载点" "/mnt/dir" && MOUNT_DIR="$READ_VAR"
                 
                 if [[ "$MOUNT_DIR" == "Q" ]]; then
-                        break 1
+                        break
                 fi
                 
                 if ( ! echo "$MOUNT_DIR" | grep "$DIR_REGEXP" &> ${NULL} ); then
                         echo_error
-                        continue 1
+                        continue
                 fi
                 
                 echo "DEVICE: ${MOUNT_DEVICE} DIR: ${MOUNT_DIR}" >> ${DISK}
@@ -142,7 +142,7 @@ echo_head "正在安装 请稍后..."
 
 for NUM in $(seq ${CURL_MAX}); do
         if [[ -s "$CENTOS_DEST" ]] && [[ "$CENTOS_MD5" == "$(md5sum ${CENTOS_DEST} | cut -d' ' -f 1)" ]]; then
-                break 1
+                break
         elif [[ -s "$CENTOS_SRC" ]]; then
                 mv ${CENTOS_SRC} ${CENTOS_DEST}
         else
@@ -160,7 +160,7 @@ fi
 
 for NUM in $(seq ${CURL_MAX}); do
         if [[ -s "$MYDISK_DEST" ]] && [[ "$MYDISK_MD5" == "$(md5sum ${MYDISK_DEST} | cut -d' ' -f 1)" ]]; then
-                break 1
+                break
         elif [[ -s "$MYDISK_SRC" ]]; then
                 mv ${MYDISK_SRC} ${MYDISK_DEST}
         else
