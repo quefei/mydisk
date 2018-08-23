@@ -61,8 +61,11 @@ config_centos()
         done
 }
 
-
-
+use_mount()
+{
+        read_command "${1} [Y/N]"
+        READ_VAR=$(echo "$READ_VAR" | tr "[a-z]" "[A-Z]")
+}
 
 
 
