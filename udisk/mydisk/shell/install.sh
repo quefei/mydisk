@@ -73,6 +73,37 @@ if [[ "$MOUNT_DISK" == "Y" ]]; then
         done
 fi
 
+## display 3
+echo_head "配置完成!"
+
+check_file "$KS_SRC"
+cp -af ${KS_SRC} ${KS_DEST}
+
+echo ""
+echo "..........你的IP: ${IPADDR}"
+echo "........你的网关: ${GATEWAY}"
+echo ".........你的DNS: ${DNS}"
+echo ""
+echo "......你的主机名: ${HOSTNAME}"
+echo ""
+echo "........root密码: ${ROOT_PASSWORD}"
+echo ".......admin密码: ${ADMIN_PASSWORD}"
+
+read_tail "开始安装"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -85,12 +116,3 @@ fi
 
 
 #### End
-echo $IPADDR
-echo $GATEWAY
-echo $DNS
-echo $HOSTNAME
-echo $ROOT_PASSWORD
-echo $ADMIN_PASSWORD
-echo $MOUNT_UDISK
-echo $MOUNT_DISK
-read_tail "ivan"
