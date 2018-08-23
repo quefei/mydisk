@@ -72,15 +72,11 @@ use_mount()
         fi
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
+config_disk()
+{
+        read_command "${1} ${NUMBER} (例如:${2}${NUM})"
+        
+        if ( echo "$READ_VAR" | grep -iE "^quit$|^exit$|^q$" &> ${NULL} ); then
+                READ_VAR="Q"
+        fi
+}

@@ -33,10 +33,23 @@ config_centos ".请输入admin密码" "$DEFAULT_PASSWORD" "$PASSWORD_REGEXP" "ec
 use_mount ".是否自动挂载U盘" && MOUNT_UDISK="$READ_VAR"
 use_mount "..是否挂载新硬盘" && MOUNT_DISK="$READ_VAR"
 
-
-
-
-
+## display 2
+if [[ "$MOUNT_DISK" == "Y" ]]; then
+        echo_head "正在配置 新硬盘:"
+        
+        echo ""
+        echo "退出当前模式请输入 Q"
+        
+        if [[ -f "$DISK" ]]; then
+                rm -rf ${DISK}
+        fi
+        
+        for NUM in $(seq ${READ_MAX}); do
+                NUMBER=$(printf "%02d\n" ${NUM})
+                
+                
+        done
+fi
 
 
 
