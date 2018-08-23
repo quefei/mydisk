@@ -23,6 +23,8 @@ NULL="${ROOTDIR}/mydisk/tmp/null.tmp"
 DISK="${ROOTDIR}/mydisk/tmp/disk.tmp"
 UDISK="${ROOTDIR}/mydisk/tmp/udisk.tmp"
 
+LOG="${ROOTDIR}/mydisk.log"
+
 DEFAULT_IPADDR="192.168.1.5"
 DEFAULT_GATEWAY="192.168.1.1"
 DEFAULT_DNS="114.114.114.114"

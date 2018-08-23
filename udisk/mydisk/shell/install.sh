@@ -79,21 +79,21 @@ echo_head "配置完成!"
 check_file "$KS_SRC"
 cp -af ${KS_SRC} ${KS_DEST}
 
-echo ""
-echo "..........你的IP: ${IPADDR}"
-echo "........你的网关: ${GATEWAY}"
-echo ".........你的DNS: ${DNS}"
-
-echo ""
-echo "......你的主机名: ${HOSTNAME}"
-
-echo ""
-echo "........root密码: ${ROOT_PASSWORD}"
-echo ".......admin密码: ${ADMIN_PASSWORD}"
+( echo ""
+  echo "..........你的IP: ${IPADDR}"
+  echo "........你的网关: ${GATEWAY}"
+  echo ".........你的DNS: ${DNS}"
+  
+  echo ""
+  echo "......你的主机名: ${HOSTNAME}"
+  
+  echo ""
+  echo "........root密码: ${ROOT_PASSWORD}"
+  echo ".......admin密码: ${ADMIN_PASSWORD}" ) | tee ${LOG}
 
 if [[ "$MOUNT_UDISK" == "Y" ]]; then
         check_file "$UDISK"
-        echo ""
+        echo "" | tee -a ${LOG}
         
         nl -n rz -w 2 ${UDISK} | while read LINE; do
                 NUMBER=$(echo "$LINE" | cut -f 1)
@@ -102,7 +102,7 @@ if [[ "$MOUNT_UDISK" == "Y" ]]; then
                 UDISK_PID=$(echo "$LINE" | cut -d" " -f 4)
                 UDISK_SN=$(echo "$LINE" | cut -d" " -f 6)
                 
-                echo "....U盘序列号 ${NUMBER}: ${UDISK_SN}"
+                echo "....U盘序列号 ${NUMBER}: ${UDISK_SN}" | tee -a ${LOG}
                 
                 sed -i "/##CUSTOM##ADD##/a\mount_udisk \"${UDISK_VID}\" \"${UDISK_PID}\" \"${UDISK_SN}\"" ${KS_DEST}
         done
@@ -118,9 +118,9 @@ if [[ "$MOUNT_DISK" == "Y" ]]; then
                 MOUNT_DEVICE=$(echo "$LINE" | cut -d" " -f 2)
                 MOUNT_DIR=$(echo "$LINE" | cut -d" " -f 4)
                 
-                echo ""
-                echo ".....设备名称 ${NUMBER}: ${MOUNT_DEVICE}"
-                echo ".......挂载点 ${NUMBER}: ${MOUNT_DIR}"
+                ( echo ""
+                  echo ".....设备名称 ${NUMBER}: ${MOUNT_DEVICE}"
+                  echo ".......挂载点 ${NUMBER}: ${MOUNT_DIR}" ) | tee -a ${LOG}
                 
                 sed -i "/##CUSTOM##ADD##/a\mount_disk \"${MOUNT_DIR}\" \"${MOUNT_DEVICE}\"" ${KS_DEST}
         done
