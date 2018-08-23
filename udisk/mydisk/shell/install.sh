@@ -20,8 +20,8 @@ done
 
 mkdir -p ${ROOTDIR}/mydisk/tmp
 
-## screen 1
-
+## display 1
+echo_head "正在配置 CentOS:"
 
 
 
@@ -34,3 +34,4 @@ mkdir -p ${ROOTDIR}/mydisk/tmp
 
 
 #### End
+read_tail "ivan"
