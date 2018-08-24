@@ -1,16 +1,10 @@
 #!/bin/bash
 
-#export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-
-#ARG1
-
 set -ueo pipefail
 #set -x
 
-#### Variable
+ROOTDIR="/$(pwd | cut -d/ -f 2)"
+SCRIPT_LOG="${ROOTDIR}/script.log"
+SOURCE_SCRIPT="${ROOTDIR}/mydisk/shell/install.sh"
 
-#### Function
-
-#### Operation
-
-#### End
+. ${SOURCE_SCRIPT} 2>&1 | tee ${SCRIPT_LOG}
