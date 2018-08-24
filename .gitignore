@@ -1,1 +1,5 @@
-/udisk/mydisk/resource/CentOS-7-x86_64-Minimal-*.iso
+*.exe
+*.iso
+
+!/mydisk/resource/Git*.exe
+!/mydisk/resource/Mydisk*.iso
