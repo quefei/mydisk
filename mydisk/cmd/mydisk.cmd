@@ -77,7 +77,7 @@ if not exist %GitBash% (
         call :EchoError "安装失败"
 )
 
-REM 运行install.sh
+REM 运行mydisk.sh
 if exist %~d0\mydisk\shell\mydisk.sh (
         start %GitBash% %~d0\mydisk\shell\mydisk.sh
 ) else (
