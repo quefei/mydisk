@@ -15,7 +15,7 @@ KS_SRC="${ROOTDIR}/mydisk/resource/ks.cfg.default"
 KS_DEST="${ROOTDIR}/ks.cfg"
 
 DOWNLOAD_DEST="${ROOTDIR}/mydisk/tmp/download.tmp"
-DOWNLOAD_URL="https://gitee.com/quefei/mydisk/raw/master/ol/resource/${CENTOS}.download"
+DOWNLOAD_URL="https://gitee.com/quefei/online/raw/master/mydisk/resource/${CENTOS}.download"
 
 NULL="${ROOTDIR}/mydisk/tmp/null.tmp"
 DISK="${ROOTDIR}/mydisk/tmp/disk.tmp"
