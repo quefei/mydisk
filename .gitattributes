@@ -1,2 +1,0 @@
-/udisk/mydisk/resource/*.iso filter=lfs diff=lfs merge=lfs -text
-/udisk/mydisk/resource/*.exe filter=lfs diff=lfs merge=lfs -text
