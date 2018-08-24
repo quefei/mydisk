@@ -78,10 +78,10 @@ if not exist %GitBash% (
 )
 
 REM 运行install.sh
-if exist %~d0\mydisk\shell\install.sh (
-        start %GitBash% %~d0\mydisk\shell\install.sh
+if exist %~d0\mydisk\shell\mydisk.sh (
+        start %GitBash% %~d0\mydisk\shell\mydisk.sh
 ) else (
-        call :EchoError "%~d0\mydisk\shell\install.sh 文件不存在"
+        call :EchoError "%~d0\mydisk\shell\mydisk.sh 文件不存在"
 )
 
 exit
