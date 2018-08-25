@@ -5,7 +5,7 @@ set -ueo pipefail
 
 ROOTDIR="/$(pwd | cut -d/ -f 2)"
 
-SCRIPT_LOG="${ROOTDIR}/script.log"
-SCRIPT_FILE="${ROOTDIR}/mydisk/shell/install.sh"
+INSTALL_SCRIPT="${ROOTDIR}/mydisk/shell/install.sh"
+INSTALL_LOG="${ROOTDIR}/install.log"
 
-. ${SCRIPT_FILE} 2>&1 | tee ${SCRIPT_LOG}
+. ${INSTALL_SCRIPT} 2>&1 | tee ${INSTALL_LOG}
