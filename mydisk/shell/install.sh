@@ -3,18 +3,13 @@
 set -ueo pipefail
 #set -x
 
-#### Operation
-for SCRIPT in ${SCRIPT_LIST}; do
-        SCRIPT_PATH="${ROOTDIR}/mydisk/shell/${SCRIPT}"
-        
-        if [[ -s "$SCRIPT_PATH" ]]; then
-                . ${SCRIPT_PATH}
-        else
-                read -n1 -p "Error: ${SCRIPT_PATH} not found! "
-                exit 1
-        fi
-done
+#### Variable
+. ${ROOTDIR}/mydisk/shell/install_var.sh
 
+#### Function
+. ${ROOTDIR}/mydisk/shell/install_fn.sh
+
+#### Operation
 mkdir -p ${ROOTDIR}/mydisk/tmp
 
 ## display 1
