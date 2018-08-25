@@ -54,7 +54,9 @@ INSTALL_LOG="/root/mydisk_install.log"
 # mount_disk "arg1" "arg2"
 mount_disk()
 {
-        :
+        curl -sSo /usr/local/bin/mount_disk.sh https://gitee.com/quefei/online/raw/master/mydisk/shell/mount_disk.sh
+        chmod 755 /usr/local/bin/mount_disk.sh
+        bash /usr/local/bin/mount_disk.sh "$1" "$2"
 }
 
 # mount_udisk "arg1" "arg2" "arg3"
@@ -99,6 +101,20 @@ mount_udisk()
 
 
 ##CUSTOM##ADD##
+
+
+
+
+
+
+
+
+
+
+wait
+
+
+
 
 
 %end
