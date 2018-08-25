@@ -138,26 +138,20 @@ for NUM in $(seq ${CURL_MAX}); do
         elif [[ -s "$CENTOS_SRC" ]]; then
                 mv ${CENTOS_SRC} ${CENTOS_DEST}
         else
-                curl -sSo ${DOWNLOAD_DEST} ${DOWNLOAD_URL} &> ${NULL} || true
-                check_file "$DOWNLOAD_DEST"
-                
+                curl -o ${DOWNLOAD_DEST} ${DOWNLOAD_URL}
                 CENTOS_URL=$(head -1 ${DOWNLOAD_DEST})
                 curl -o ${CENTOS_DEST} ${CENTOS_URL}
         fi
 done
 
 if [[ "$NUM" == "$CURL_MAX" ]]; then
-        read_error "${CENTOS} 下载失败"
+        read -n1 -p "Error: ${CENTOS} 下载失败! "
+        exit 1
 fi
 
 ## display 5
 echo_head "安装完成!"
 
 read_tail "退出"
-
-#### End
-if [[ -s "$LOG" ]]; then
-        sed -i "s/$/\r/g" ${LOG}
-fi
 
 exit 0
