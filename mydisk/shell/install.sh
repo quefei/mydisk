@@ -130,11 +130,7 @@ read_tail "开始安装"
 ## display 4
 echo_head "正在安装 请稍后..."
 
-if [[ -s "$MYDISK_SRC" ]]; then
-        mv ${MYDISK_SRC} ${MYDISK_DEST}
-else
-        read_error "${MYDISK_SRC} 文件不存在"
-fi
+mv ${MYDISK_SRC} ${MYDISK_DEST}
 
 for NUM in $(seq ${CURL_MAX}); do
         if [[ -s "$CENTOS_DEST" ]] && [[ "$CENTOS_MD5" == "$(md5sum ${CENTOS_DEST} | cut -d' ' -f 1)" ]]; then
