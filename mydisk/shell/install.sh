@@ -68,24 +68,23 @@ fi
 ## display 3
 echo_head "配置完成!"
 
-check_file "$KS_SRC"
 cp -af ${KS_SRC} ${KS_DEST}
 
-( echo ""
-  echo "..........你的IP: ${IPADDR}"
-  echo "........你的网关: ${GATEWAY}"
-  echo ".........你的DNS: ${DNS}"
-  
-  echo ""
-  echo "......你的主机名: ${HOSTNAME}"
-  
-  echo ""
-  echo "........root密码: ${ROOT_PASSWORD}"
-  echo ".......admin密码: ${ADMIN_PASSWORD}" ) | tee ${LOG}
+echo ""
+echo "..........你的IP: ${IPADDR}"
+echo "........你的网关: ${GATEWAY}"
+echo ".........你的DNS: ${DNS}"
+
+echo ""
+echo "......你的主机名: ${HOSTNAME}"
+
+echo ""
+echo "........root密码: ${ROOT_PASSWORD}"
+echo ".......admin密码: ${ADMIN_PASSWORD}"
 
 if [[ "$MOUNT_UDISK" == "Y" ]]; then
-        check_file "$UDISK"
-        echo "" | tee -a ${LOG}
+        sed -i "s/\r$//g" ${UDISK}
+        echo ""
         
         nl -n rz -w 2 ${UDISK} | while read LINE; do
                 NUMBER=$(echo "$LINE" | cut -f 1)
@@ -94,14 +93,13 @@ if [[ "$MOUNT_UDISK" == "Y" ]]; then
                 UDISK_PID=$(echo "$LINE" | cut -d" " -f 4)
                 UDISK_SN=$(echo "$LINE" | cut -d" " -f 6)
                 
-                echo "....U盘序列号 ${NUMBER}: ${UDISK_SN}" | tee -a ${LOG}
+                echo "....U盘序列号 ${NUMBER}: ${UDISK_SN}"
                 
                 sed -i "/##CUSTOM##ADD##/a\mount_udisk \"${UDISK_VID}\" \"${UDISK_PID}\" \"${UDISK_SN}\"" ${KS_DEST}
         done
 fi
 
-if [[ "$MOUNT_DISK" == "Y" ]]; then
-        check_file "$DISK"
+if [[ "$MOUNT_DISK" == "Y" ]] && [[ -s "$DISK" ]]; then
         COMPLETE="poweroff"
         
         nl -n rz -w 2 ${DISK} | while read LINE; do
@@ -110,9 +108,9 @@ if [[ "$MOUNT_DISK" == "Y" ]]; then
                 MOUNT_DEVICE=$(echo "$LINE" | cut -d" " -f 2)
                 MOUNT_DIR=$(echo "$LINE" | cut -d" " -f 4)
                 
-                ( echo ""
-                  echo ".....设备名称 ${NUMBER}: ${MOUNT_DEVICE}"
-                  echo ".......挂载点 ${NUMBER}: ${MOUNT_DIR}" ) | tee -a ${LOG}
+                echo ""
+                echo ".....设备名称 ${NUMBER}: ${MOUNT_DEVICE}"
+                echo ".......挂载点 ${NUMBER}: ${MOUNT_DIR}"
                 
                 sed -i "/##CUSTOM##ADD##/a\mount_disk \"${MOUNT_DIR}\" \"${MOUNT_DEVICE}\"" ${KS_DEST}
         done
