@@ -1,5 +1,8 @@
 #!/bin/bash
 
+set -ueo pipefail
+#set -x
+
 VERSION="1804"
 
 CENTOS="CentOS-7-x86_64-Minimal-${VERSION}.iso"

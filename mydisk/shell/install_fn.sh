@@ -1,5 +1,8 @@
 #!/bin/bash
 
+set -ueo pipefail
+#set -x
+
 echo_head()
 {
         clear
