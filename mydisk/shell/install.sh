@@ -117,7 +117,7 @@ if [[ "$MOUNT_DISK" == "Y" ]] && [[ -s "$DISK" ]]; then
 fi
 
 sed -i "/##CUSTOM##ADD##/a\echo '${ADMIN_PASSWORD}' | passwd --stdin admin 2>&1 | tee -a \${INSTALL_LOG}" ${KS_DEST}
-sed -i "/##CUSTOM##ADD##/a\echo '${ROOT_PASSWORD}'  | passwd --stdin root  2>&1 | tee -a \${INSTALL_LOG}"  ${KS_DEST}
+sed -i "/##CUSTOM##ADD##/a\echo '${ROOT_PASSWORD}'  | passwd --stdin root  2>&1 | tee -a \${INSTALL_LOG}" ${KS_DEST}
 
 sed -i "s/##CUSTOM##IPADDR##/${IPADDR}/g"     ${KS_DEST}
 sed -i "s/##CUSTOM##GATEWAY##/${GATEWAY}/g"   ${KS_DEST}
