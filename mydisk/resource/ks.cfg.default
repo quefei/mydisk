@@ -48,8 +48,20 @@ set -ueo pipefail
 set -x
 
 #### Variable
+INSTALL_LOG="/root/mydisk_install.log"
 
 #### Function
+# mount_disk "arg1" "arg2"
+mount_disk()
+{
+        :
+}
+
+# mount_udisk "arg1" "arg2" "arg3"
+mount_udisk()
+{
+        :
+}
 
 #### Operation
 
