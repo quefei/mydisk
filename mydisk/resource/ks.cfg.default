@@ -37,6 +37,8 @@ kexec-tools
 %pre
 %end
 %post
+lvextend -l +100%FREE /dev/centos/usr_local
+xfs_growfs /dev/centos/usr_local
 
 
 ####
