@@ -14,18 +14,18 @@ selinux --disabled
 firewall --enabled
 
 
-bootloader --append=" crashkernel=auto" --location=mbr --boot-drive=sda
-clearpart --all --initlabel --drives=sda
-part        biosboot      --fstype="biosboot"    --ondisk=sda     --size=2
-part        /boot         --fstype="xfs"         --ondisk=sda     --size=1024
-part        pv.100        --fstype="lvmpv"       --ondisk=sda     --grow
-volgroup    centos        --pesize=4096          pv.100
-logvol      swap          --fstype="swap"        --size=8192      --name=swap         --vgname=centos
-# 500G, 465G, 100g 50g 50g 256g
-logvol      /             --fstype="xfs"         --size=102400    --name=root         --vgname=centos
-logvol      /var          --fstype="xfs"         --size=51200     --name=var          --vgname=centos
-logvol      /home         --fstype="xfs"         --size=51200     --name=home         --vgname=centos
-logvol      /usr/local    --fstype="xfs"         --size=262144    --name=usr_local    --vgname=centos
+# 200G; 2m, 1g, 8g; 80g, 40g, 40g, 31g
+bootloader --append=" crashkernel=auto"   --location=mbr --boot-drive=sda
+clearpart  --all      --initlabel         --drives=sda
+part       biosboot   --fstype="biosboot" --ondisk=sda   --size=2
+part       /boot      --fstype="xfs"      --ondisk=sda   --size=1024
+part       pv.100     --fstype="lvmpv"    --ondisk=sda   --grow
+volgroup   centos     --pesize=4096       pv.100
+logvol     swap       --fstype="swap"     --size=8192    --name=swap      --vgname=centos
+logvol     /          --fstype="xfs"      --size=81920   --name=root      --vgname=centos
+logvol     /var       --fstype="xfs"      --size=40960   --name=var       --vgname=centos
+logvol     /home      --fstype="xfs"      --size=40960   --name=home      --vgname=centos
+logvol     /usr/local --fstype="xfs"      --size=31742   --name=usr_local --vgname=centos
 
 
 ##CUSTOM##COMPLETE##
