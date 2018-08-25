@@ -42,6 +42,48 @@ xfs_growfs /dev/centos/usr_local
 
 
 ####
+export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+set -ueo pipefail
+set -x
+
+#### Variable
+
+#### Function
+
+#### Operation
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 ##CUSTOM##ADD##
