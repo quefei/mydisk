@@ -1,7 +1,6 @@
 #!/bin/bash
 
 set -ueo pipefail
-#set -x
 
 VERSION="1804"
 
