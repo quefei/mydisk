@@ -1,18 +1,13 @@
 #!/bin/bash
 
 set -ueo pipefail
-#set -x
 
-#### Variable
 . ${ROOTDIR}/mydisk/shell/install_var.sh
-
-#### Function
 . ${ROOTDIR}/mydisk/shell/install_fn.sh
 
-#### Operation
-## display 1
 mkdir -p ${ROOTDIR}/mydisk/tmp
 
+## display 1
 echo_head "正在配置 CentOS:"
 
 config_centos "....请输入你的IP" "$DEFAULT_IPADDR"   "$IP_REGEXP"       "break"      "echo_error" && IPADDR="$READ_VAR"
@@ -138,7 +133,7 @@ for NUM in $(seq ${CURL_MAX}); do
         elif [[ -s "$CENTOS_SRC" ]]; then
                 mv ${CENTOS_SRC} ${CENTOS_DEST}
         else
-                curl -o ${DOWNLOAD_DEST} ${DOWNLOAD_URL}
+                curl -sSo ${DOWNLOAD_DEST} ${DOWNLOAD_URL}
                 CENTOS_URL=$(head -1 ${DOWNLOAD_DEST})
                 curl -o ${CENTOS_DEST} ${CENTOS_URL}
         fi
