@@ -1,7 +1,6 @@
 #!/bin/bash
 
 set -ueo pipefail
-#set -x
 
 ROOTDIR="/$(pwd | cut -d/ -f 2)"
 
