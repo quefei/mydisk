@@ -58,13 +58,16 @@ mount_udisk()
         curl -sSo /usr/local/bin/mydisk_rules.sh https://gitee.com/quefei/online/raw/master/mydisk/shell/mydisk_rules.sh
         chmod 755 /usr/local/bin/mydisk_rules.sh
         bash /usr/local/bin/mydisk_rules.sh "$1" "$2" "$3"
-        
         curl -sS https://gitee.com/quefei/online/raw/master/mydisk/shell/mount_udisk.sh | bash
 }
 
 ##CUSTOM##ADD##
 
 wait
+
+echo "----------------------------"          &>> ${INSTALL_LOG}
+echo "Success: $(date +"%Y-%m-%d %H:%M:%S")" &>> ${INSTALL_LOG}
+echo "----------------------------"          &>> ${INSTALL_LOG}
 ####
 
 
