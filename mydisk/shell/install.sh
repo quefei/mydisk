@@ -90,7 +90,7 @@ if [[ "$MOUNT_UDISK" == "Y" ]]; then
                 
                 echo "....U盘序列号 ${NUMBER}: ${UDISK_SN}"
                 
-                sed -i "/##CUSTOM##ADD##/a\mount_udisk \"${UDISK_VID}\" \"${UDISK_PID}\" \"${UDISK_SN}\" &>> \${INSTALL_LOG}" ${KS_DEST}
+                sed -i "/##CUSTOM##ADD##/a\mount_udisk \"${UDISK_VID}\" \"${UDISK_PID}\" \"${UDISK_SN}\"" ${KS_DEST}
         done
 fi
 
@@ -107,12 +107,12 @@ if [[ "$MOUNT_DISK" == "Y" ]] && [[ -s "$DISK" ]]; then
                 echo ".....设备名称 ${NUMBER}: ${MOUNT_DEVICE}"
                 echo ".......挂载点 ${NUMBER}: ${MOUNT_DIR}"
                 
-                sed -i "/##CUSTOM##ADD##/a\mount_disk \"${MOUNT_DIR}\" \"${MOUNT_DEVICE}\" &>> \${INSTALL_LOG}" ${KS_DEST}
+                sed -i "/##CUSTOM##ADD##/a\mount_disk \"${MOUNT_DIR}\" \"${MOUNT_DEVICE}\"" ${KS_DEST}
         done
 fi
 
-sed -i "/##CUSTOM##ADD##/a\echo '${ADMIN_PASSWORD}' | passwd --stdin admin &>> \${INSTALL_LOG}" ${KS_DEST}
-sed -i "/##CUSTOM##ADD##/a\echo '${ROOT_PASSWORD}'  | passwd --stdin root  &>> \${INSTALL_LOG}" ${KS_DEST}
+sed -i "/##CUSTOM##ADD##/a\echo '${ADMIN_PASSWORD}' | passwd --stdin admin" ${KS_DEST}
+sed -i "/##CUSTOM##ADD##/a\echo '${ROOT_PASSWORD}'  | passwd --stdin root"  ${KS_DEST}
 
 sed -i "s/##CUSTOM##IPADDR##/${IPADDR}/g"     ${KS_DEST}
 sed -i "s/##CUSTOM##GATEWAY##/${GATEWAY}/g"   ${KS_DEST}

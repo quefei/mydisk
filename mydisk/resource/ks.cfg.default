@@ -61,13 +61,17 @@ mount_udisk()
         curl -sS https://gitee.com/quefei/online/raw/master/mydisk/shell/mount_udisk.sh | bash
 }
 
+(
+
 ##CUSTOM##ADD##
 
 wait
 
-echo "----------------------------"          &>> ${INSTALL_LOG}
-echo "Success: $(date +"%Y-%m-%d %H:%M:%S")" &>> ${INSTALL_LOG}
-echo "----------------------------"          &>> ${INSTALL_LOG}
+echo "----------------------------"
+echo "Success: $(date +"%Y-%m-%d %H:%M:%S")"
+echo "----------------------------"
+
+) &> ${INSTALL_LOG}
 ####
 
 
