@@ -42,16 +42,10 @@ xfs_growfs /dev/centos/usr_local
 
 
 ####
-export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+set -xueo pipefail
 
-set -ueo pipefail
-set -x
-
-#### Variable
 INSTALL_LOG="/root/mydisk_install.log"
 
-#### Function
-# mount_disk "arg1" "arg2"
 mount_disk()
 {
         curl -sSo /usr/local/bin/mount_disk.sh https://gitee.com/quefei/online/raw/master/mydisk/shell/mount_disk.sh
@@ -59,18 +53,19 @@ mount_disk()
         bash /usr/local/bin/mount_disk.sh "$1" "$2"
 }
 
-# mount_udisk "arg1" "arg2" "arg3"
 mount_udisk()
 {
-        curl -sSo /usr/local/bin/mount_udisk.sh https://gitee.com/quefei/online/raw/master/mydisk/shell/mount_udisk.sh
-        chmod 755 /usr/local/bin/mount_udisk.sh
-        bash /usr/local/bin/mount_udisk.sh "$1" "$2" "$3"
+        curl -sSo /usr/local/bin/mydisk_rules.sh https://gitee.com/quefei/online/raw/master/mydisk/shell/mydisk_rules.sh
+        chmod 755 /usr/local/bin/mydisk_rules.sh
+        bash /usr/local/bin/mydisk_rules.sh "$1" "$2" "$3"
+        
+        curl -sS https://gitee.com/quefei/online/raw/master/mydisk/shell/mount_udisk.sh | bash
 }
 
-#### Operation
 ##CUSTOM##ADD##
 
 wait
+####
 
 
 %end
