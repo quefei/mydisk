@@ -16,8 +16,24 @@ MYDISK_DEST="${ROOTDIR}/${MYDISK}"
 KS_SRC="${ROOTDIR}/mydisk/resource/ks.cfg.default"
 KS_DEST="${ROOTDIR}/ks.cfg"
 
+GITEE_URL="https://gitee.com/quefei/online/raw/master/mydisk"
+
 DOWNLOAD_DEST="${ROOTDIR}/mydisk/tmp/download.tmp"
-DOWNLOAD_URL="https://gitee.com/quefei/online/raw/master/mydisk/resource/${CENTOS}.download"
+DOWNLOAD_URL="${GITEE_URL}/resource/${CENTOS}.download"
+
+SHELL_DIR="${ROOTDIR}/shell"
+SHELL_COPY="${ROOTDIR}/mydisk/resource/shell.copy"
+
+BAK_TIME="bak.$(date +"%Y%m%d%H%M%S")"
+
+CONF_DEST="${SHELL_DIR}/conf/my.conf"
+CONF_URL="${GITEE_URL}/resource/my.conf"
+
+FOREVER_DEST="${SHELL_DIR}/forever/my.sh"
+FOREVER_URL="${GITEE_URL}/shell/forever_my.sh"
+
+ONCE_DEST="${SHELL_DIR}/once/my.sh"
+ONCE_URL="${GITEE_URL}/shell/once_my.sh"
 
 NULL="${ROOTDIR}/mydisk/tmp/null.tmp"
 DISK="${ROOTDIR}/mydisk/tmp/disk.tmp"
