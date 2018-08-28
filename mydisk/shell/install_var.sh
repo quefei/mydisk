@@ -22,6 +22,7 @@ DOWNLOAD_URL="https://gitee.com/quefei/online/raw/master/mydisk/resource/${CENTO
 NULL="${ROOTDIR}/mydisk/tmp/null.tmp"
 DISK="${ROOTDIR}/mydisk/tmp/disk.tmp"
 UDISK="${ROOTDIR}/mydisk/tmp/udisk.tmp"
+OTHER="${ROOTDIR}/mydisk/tmp/other.tmp"
 
 DEFAULT_IPADDR="192.168.1.5"
 DEFAULT_GATEWAY="192.168.1.1"
