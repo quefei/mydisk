@@ -7,7 +7,7 @@ set Git=Git-2.18.0-64-bit.exe
 set GitSrc=%~d0\mydisk\resource\%Git%
 set GitBash="C:\Program Files\Git\git-bash.exe"
 
-REM U≈ÃæÌ±Í
+REM ºÏ≤ÈU≈Ã
 for /f "tokens=1-3" %%a in ('wmic logicaldisk get Description^,DeviceID^,VolumeName 2^>nul') do (
         if /i "%%a"=="ø…“∆∂Ø¥≈≈Ã" (
                 if /i "%%b\mydisk\cmd\"=="%~dp0" (
