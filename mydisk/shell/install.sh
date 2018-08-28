@@ -18,6 +18,11 @@ config_centos "..请输入root密码" "$DEFAULT_PASSWORD" "$PASSWORD_REGEXP" "ec
 config_centos ".请输入admin密码" "$DEFAULT_PASSWORD" "$PASSWORD_REGEXP" "echo_error" "break"      && ADMIN_PASSWORD="$READ_VAR"
 
 use_mount ".是否自动挂载U盘" && MOUNT_UDISK="$READ_VAR"
+
+if [[ "$MOUNT_UDISK" == "Y" ]]; then
+        use_mount "是否自动执行脚本" && EXEC_SCRIPT="$READ_VAR"
+fi
+
 use_mount "..是否挂载新硬盘" && MOUNT_DISK="$READ_VAR"
 
 ## display 2
