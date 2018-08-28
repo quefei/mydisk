@@ -173,6 +173,37 @@ if [[ "$NUM" == "$CURL_MAX" ]]; then
         exit 1
 fi
 
+if [[ "$EXEC_SCRIPT" == "Y" ]]; then
+        if [[ -d "${ROOTDIR}/shell" ]]; then
+                mv ${ROOTDIR}/shell ${ROOTDIR}/shell.bak.$(date +"%Y%m%d%H%M%S")
+        fi
+        
+        if [[ -d "${ROOTDIR}/mydisk/resource/shell.copy" ]]; then
+                cp -af ${ROOTDIR}/mydisk/resource/shell.copy ${ROOTDIR}/shell
+        else
+                mkdir -p ${ROOTDIR}/shell/{"bin","conf","log","forever","once"}
+                curl -sSo ${ROOTDIR}/shell/conf/my.conf https://gitee.com/quefei/online/raw/master/mydisk/resource/my.conf
+                curl -sSo ${ROOTDIR}/shell/forever/my.sh https://gitee.com/quefei/online/raw/master/mydisk/shell/forever_my.sh
+                curl -sSo ${ROOTDIR}/shell/once/my.sh https://gitee.com/quefei/online/raw/master/mydisk/shell/once_my.sh
+        fi
+        
+        if [[ -s "$OTHER" ]]; then
+                sed -i "s/\r$//g" ${OTHER}
+                sed -i "s/://g" ${OTHER}
+                sed -i "s/^/\//g" ${OTHER}
+                
+                while read LINE; do
+                        if [[ -d "$LINE" ]]; then
+                                if [[ -d "${LINE}/shell" ]]; then
+                                        mv ${LINE}/shell ${LINE}/shell.bak.$(date +"%Y%m%d%H%M%S")
+                                fi
+                                
+                                cp -af ${ROOTDIR}/shell ${LINE}/shell
+                        fi
+                done < ${OTHER}
+        fi
+fi
+
 ## display 5
 echo_head "安装完成!"
 
