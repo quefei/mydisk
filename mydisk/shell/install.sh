@@ -20,7 +20,7 @@ config_centos ".请输入admin密码" "$DEFAULT_PASSWORD" "$PASSWORD_REGEXP" "ec
 use_mount ".是否自动挂载U盘" && MOUNT_UDISK="$READ_VAR"
 
 if [[ "$MOUNT_UDISK" == "Y" ]]; then
-        use_mount "是否自动执行脚本" && EXEC_SCRIPT="$READ_VAR"
+        use_mount ".是否执行U盘脚本" && EXEC_SCRIPT="$READ_VAR"
 fi
 
 use_mount "..是否挂载新硬盘" && MOUNT_DISK="$READ_VAR"
@@ -93,6 +93,14 @@ echo ""
 echo "........root密码: ${ROOT_PASSWORD}"
 echo ".......admin密码: ${ADMIN_PASSWORD}"
 
+if [[ "$EXEC_SCRIPT" == "Y" ]]; then
+        echo ""
+        echo ".....执行U盘脚本: 开启"
+        
+        sed -i "/##CUSTOM##ADD##/a\exec_script" ${KS_DEST}
+        sed -i "/##CUSTOM##ADD##/G" ${KS_DEST}
+fi
+
 if [[ "$MOUNT_UDISK" == "Y" ]]; then
         sed -i "s/\r$//g" ${UDISK}
         echo ""
@@ -108,6 +116,8 @@ if [[ "$MOUNT_UDISK" == "Y" ]]; then
                 
                 sed -i "/##CUSTOM##ADD##/a\mount_udisk \"${UDISK_VID}\" \"${UDISK_PID}\" \"${UDISK_SN}\"" ${KS_DEST}
         done
+        
+        sed -i "/##CUSTOM##ADD##/G" ${KS_DEST}
 fi
 
 if [[ "$MOUNT_DISK" == "Y" ]] && [[ -s "$DISK" ]]; then
@@ -125,10 +135,13 @@ if [[ "$MOUNT_DISK" == "Y" ]] && [[ -s "$DISK" ]]; then
                 
                 sed -i "/##CUSTOM##ADD##/a\mount_disk \"${MOUNT_DIR}\" \"${MOUNT_DEVICE}\"" ${KS_DEST}
         done
+        
+        sed -i "/##CUSTOM##ADD##/G" ${KS_DEST}
 fi
 
 sed -i "/##CUSTOM##ADD##/a\echo '${ADMIN_PASSWORD}' | passwd --stdin admin" ${KS_DEST}
-sed -i "/##CUSTOM##ADD##/a\echo '${ROOT_PASSWORD}'  | passwd --stdin root"  ${KS_DEST}
+sed -i "/##CUSTOM##ADD##/a\echo '${ROOT_PASSWORD}' | passwd --stdin root"  ${KS_DEST}
+sed -i "/##CUSTOM##ADD##/G" ${KS_DEST}
 
 sed -i "s/##CUSTOM##IPADDR##/${IPADDR}/g"     ${KS_DEST}
 sed -i "s/##CUSTOM##GATEWAY##/${GATEWAY}/g"   ${KS_DEST}
