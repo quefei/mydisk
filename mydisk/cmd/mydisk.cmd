@@ -7,7 +7,7 @@ set Git=Git-2.18.0-64-bit.exe
 set GitSrc=%~d0\mydisk\resource\%Git%
 set GitBash="C:\Program Files\Git\git-bash.exe"
 
-REM 检查U盘
+REM U盘卷标
 for /f "tokens=1-3" %%a in ('wmic logicaldisk get Description^,DeviceID^,VolumeName 2^>nul') do (
         if /i "%%a"=="可移动磁盘" (
                 if /i "%%b\mydisk\cmd\"=="%~dp0" (
@@ -16,7 +16,9 @@ for /f "tokens=1-3" %%a in ('wmic logicaldisk get Description^,DeviceID^,VolumeN
         )
 )
 
-if not defined DeviceID (
+if defined DeviceID (
+        label %DeviceID% %UdiskLabel%
+) else (
         call :EchoError "请将此程序复制到U盘根目录下运行"
 )
 
