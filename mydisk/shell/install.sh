@@ -140,7 +140,7 @@ if [[ "$MOUNT_DISK" == "Y" ]] && [[ -s "$DISK" ]]; then
 fi
 
 sed -i "/##CUSTOM##ADD##/a\echo '${ADMIN_PASSWORD}' | passwd --stdin admin" ${KS_DEST}
-sed -i "/##CUSTOM##ADD##/a\echo '${ROOT_PASSWORD}' | passwd --stdin root"  ${KS_DEST}
+sed -i "/##CUSTOM##ADD##/a\echo '${ROOT_PASSWORD}' | passwd --stdin root"   ${KS_DEST}
 sed -i "/##CUSTOM##ADD##/G" ${KS_DEST}
 
 sed -i "s/##CUSTOM##IPADDR##/${IPADDR}/g"     ${KS_DEST}
