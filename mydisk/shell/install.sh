@@ -61,8 +61,8 @@ if [[ "$MOUNT_DISK" == "Y" ]]; then
                         break
                 fi
                 
-                if ( ! echo "$MOUNT_DIR" | grep "$DIR_REGEXP" &> ${NULL} ) \
-                || (   echo "$MOUNT_DIR" | grep "^/dev/" &> ${NULL} ); then
+                if ( ! echo "$MOUNT_DIR" | grep    "$DIR_REGEXP" &> ${NULL} ) \
+                || (   echo "$MOUNT_DIR" | grep -E "^/dev/|^/dev$" &> ${NULL} ); then
                         echo_error
                         continue
                 fi
