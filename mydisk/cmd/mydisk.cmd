@@ -16,9 +16,7 @@ for /f "tokens=1-3" %%a in ('wmic logicaldisk get Description^,DeviceID^,VolumeN
         )
 )
 
-if defined DeviceID (
-        label %DeviceID% %UdiskLabel%
-) else (
+if not defined DeviceID (
         call :EchoError "请将此程序复制到U盘根目录下运行"
 )
 
