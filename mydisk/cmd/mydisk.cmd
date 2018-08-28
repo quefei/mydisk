@@ -60,6 +60,20 @@ for /l %%a in (1,1,%CountVar%) do (
 
 endlocal
 
+REM 额外U盘
+if exist %~d0\mydisk\tmp\other.tmp (
+        del /f %~d0\mydisk\tmp\other.tmp
+)
+
+for /f "tokens=1-3" %%a in ('wmic logicaldisk get Description^,DeviceID^,VolumeName 2^>nul') do (
+        if /i "%%a"=="可移动磁盘" (
+                if /i "%%b" neq "%DeviceID%" (
+                        label %%b %UdiskLabel%
+                        echo,%%b>>%~d0\mydisk\tmp\other.tmp
+                )
+        )
+)
+
 REM 安装GitBash
 if not exist %GitBash% (
         if exist %GitSrc% (
