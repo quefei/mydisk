@@ -50,13 +50,24 @@ if [[ "$MOUNT_DISK" == "Y" ]]; then
                         continue
                 fi
                 
+                if [[ -s "$DISK" ]] && ( grep " ${MOUNT_DEVICE} " ${DISK} &> ${NULL} ); then
+                        echo_error
+                        continue
+                fi
+                
                 config_disk "..请输入挂载点" "/mnt/dir" && MOUNT_DIR="$READ_VAR"
                 
                 if [[ "$MOUNT_DIR" == "Q" ]]; then
                         break
                 fi
                 
-                if ( ! echo "$MOUNT_DIR" | grep "$DIR_REGEXP" &> ${NULL} ); then
+                if ( ! echo "$MOUNT_DIR" | grep "$DIR_REGEXP" &> ${NULL} ) \
+                || (   echo "$MOUNT_DIR" | grep "^/dev/" &> ${NULL} ); then
+                        echo_error
+                        continue
+                fi
+                
+                if [[ -s "$DISK" ]] && ( grep " ${MOUNT_DIR}$" ${DISK} &> ${NULL} ); then
                         echo_error
                         continue
                 fi
