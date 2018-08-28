@@ -174,31 +174,31 @@ if [[ "$NUM" == "$CURL_MAX" ]]; then
 fi
 
 if [[ "$EXEC_SCRIPT" == "Y" ]]; then
-        if [[ -d "${ROOTDIR}/shell" ]]; then
-                mv ${ROOTDIR}/shell ${ROOTDIR}/shell.bak.$(date +"%Y%m%d%H%M%S")
+        if [[ -d "$SHELL_DIR" ]]; then
+                mv ${SHELL_DIR} ${SHELL_DIR}.${BAK_TIME}
         fi
         
-        if [[ -d "${ROOTDIR}/mydisk/resource/shell.copy" ]]; then
-                cp -af ${ROOTDIR}/mydisk/resource/shell.copy ${ROOTDIR}/shell
+        if [[ -d "$SHELL_COPY" ]]; then
+                cp -af ${SHELL_COPY} ${SHELL_DIR}
         else
-                mkdir -p ${ROOTDIR}/shell/{"bin","conf","log","forever","once"}
-                curl -sSo ${ROOTDIR}/shell/conf/my.conf https://gitee.com/quefei/online/raw/master/mydisk/resource/my.conf
-                curl -sSo ${ROOTDIR}/shell/forever/my.sh https://gitee.com/quefei/online/raw/master/mydisk/shell/forever_my.sh
-                curl -sSo ${ROOTDIR}/shell/once/my.sh https://gitee.com/quefei/online/raw/master/mydisk/shell/once_my.sh
+                mkdir -p ${SHELL_DIR}/{"bin","conf","log","forever","once"}
+                curl -sSo ${CONF_DEST}    ${CONF_URL}
+                curl -sSo ${ONCE_DEST}    ${ONCE_URL}
+                curl -sSo ${FOREVER_DEST} ${FOREVER_URL}
         fi
         
         if [[ -s "$OTHER" ]]; then
                 sed -i "s/\r$//g" ${OTHER}
-                sed -i "s/://g" ${OTHER}
+                sed -i "s/://g"   ${OTHER}
                 sed -i "s/^/\//g" ${OTHER}
                 
                 while read LINE; do
+                        if [[ -d "${LINE}/shell" ]]; then
+                                mv ${LINE}/shell ${LINE}/shell.${BAK_TIME}
+                        fi
+                        
                         if [[ -d "$LINE" ]]; then
-                                if [[ -d "${LINE}/shell" ]]; then
-                                        mv ${LINE}/shell ${LINE}/shell.bak.$(date +"%Y%m%d%H%M%S")
-                                fi
-                                
-                                cp -af ${ROOTDIR}/shell ${LINE}/shell
+                                cp -af ${SHELL_DIR} ${LINE}/shell
                         fi
                 done < ${OTHER}
         fi
