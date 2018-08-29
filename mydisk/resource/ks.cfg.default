@@ -61,6 +61,11 @@ mount_udisk()
         curl -sS https://gitee.com/quefei/online/raw/master/mydisk/shell/mount_udisk.sh | bash
 }
 
+exec_script()
+{
+        
+}
+
 {
 
 ##CUSTOM##ADD##
