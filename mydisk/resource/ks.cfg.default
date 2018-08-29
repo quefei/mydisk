@@ -44,7 +44,7 @@ xfs_growfs /dev/centos/usr_local
 ####
 set -xueo pipefail
 
-INSTALL_LOG="/root/mydisk_install.log"
+INSTALL_LOG="/root/install.log"
 GITEE_URL="https://gitee.com/quefei/online/raw/master/mydisk"
 
 mount_disk()
@@ -63,15 +63,21 @@ exec_script()
         curl -sS ${GITEE_URL}/shell/exec_script.sh | bash
 }
 
+echo_success()
+{
+        set +x
+        echo "================================================================================"
+        echo " Success: $(date +"%Y-%m-%d %H:%M:%S")"
+        echo "================================================================================"
+}
+
 {
 
 ##CUSTOM##ADD##
 
 wait
-set +x
-echo "================================================================================"
-echo " Success: $(date +"%Y-%m-%d %H:%M:%S")"
-echo "================================================================================"
+
+echo_success
 
 } &> ${INSTALL_LOG}
 ####
