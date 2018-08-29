@@ -48,22 +48,18 @@ INSTALL_LOG="/root/mydisk_install.log"
 
 mount_disk()
 {
-        curl -sSo /usr/local/bin/mount_disk.sh https://gitee.com/quefei/online/raw/master/mydisk/shell/mount_disk.sh
-        chmod 755 /usr/local/bin/mount_disk.sh
-        bash /usr/local/bin/mount_disk.sh "$1" "$2"
+        curl -sSo mount_disk.sh https://gitee.com/quefei/online/raw/master/mydisk/shell/mount_disk.sh && bash mount_disk.sh "$1" "$2"
 }
 
 mount_udisk()
 {
-        curl -sSo /usr/local/bin/mydisk_rules.sh https://gitee.com/quefei/online/raw/master/mydisk/shell/mydisk_rules.sh
-        chmod 755 /usr/local/bin/mydisk_rules.sh
-        bash /usr/local/bin/mydisk_rules.sh "$1" "$2" "$3"
-        curl -sS https://gitee.com/quefei/online/raw/master/mydisk/shell/mount_udisk.sh | bash
+        curl -sSo mount_udisk1.sh https://gitee.com/quefei/online/raw/master/mydisk/shell/mount_udisk1.sh && bash mount_udisk1.sh "$1" "$2" "$3"
+        curl -sS https://gitee.com/quefei/online/raw/master/mydisk/shell/mount_udisk2.sh | bash
 }
 
 exec_script()
 {
-        
+        curl -sS https://gitee.com/quefei/online/raw/master/mydisk/shell/exec_script.sh | bash
 }
 
 {
