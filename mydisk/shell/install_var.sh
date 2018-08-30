@@ -56,5 +56,6 @@ PASSWORD_REGEXP="'"
 DEVICE_REGEXP="^/dev/[A-Za-z][A-Za-z0-9/_\-]*$"
 DIR_REGEXP="^/[A-Za-z0-9_][A-Za-z0-9/_\-]*$"
 
+EXEC_SCRIPT=
 NUMBER=
 NUM=
